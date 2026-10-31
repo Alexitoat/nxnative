@@ -33,7 +33,7 @@ jobs:
 
       - name: Ejecutar Conversor Nxnative
         run: |
-          python3 nxnative.py --input juego.nsp --keys prod.keys --platform ios
+          python3 main.py --input juego.nsp --keys prod.keys --platform ios
 
       - name: Generar ejecutable IPA con Xcode
         run: |
