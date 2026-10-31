@@ -19,14 +19,28 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Instalar requerimientos
-        run: pip3 install -r requirements.txt
+      - name: Instalar herramientas de descarga
+        run: |
+          pip3 install gdown zstandard
+
+      - name: Descargar Juego y Claves desde Secrets
+        run: |
+          # Creamos el archivo de claves secreto
+          echo "${{ secrets.PROD_KEYS }}" > prod.keys
+          
+          # Descargamos el juego pesado saltando la advertencia de Google
+          gdown --id 14vuE2yOd0CEtAkjicdK4iE9qCkrjyiUt -O juego.nsp
 
       - name: Ejecutar Conversor Nxnative
         run: |
-          echo "Aquí se ejecutará el script de nxnative convirtiendo el juego"
+          python3 nxnative.py --input juego.nsp --keys prod.keys --platform ios
 
-      - name: Generar ejecutable con Xcode
+      - name: Generar ejecutable IPA con Xcode
         run: |
-          # Comando base para generar el proyecto final
-          echo "Compilando con Xcode de la nube..."
+          xcodebuild -project nxnative.xcodeproj -scheme "nxnative-iOS" -configuration Release -sdk iphoneos DEPLOYMENT_LOCATION=YES
+
+      - name: Subir Archivo IPA Terminado
+        uses: actions/upload-artifact@v4
+        with:
+          name: juego-ios-compilado
+          path: build/*.ipa
