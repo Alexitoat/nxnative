@@ -29,7 +29,7 @@ jobs:
           echo "${{ secrets.PROD_KEYS }}" > prod.keys
           
           # Descargamos el juego pesado saltando la advertencia de Google
-          gdown --id 14vuE2yOd0CEtAkjicdK4iE9qCkrjyiUt -O juego.nsp
+          gdown 14vuE2yOd0CEtAkjicdK4iE9qCkrjyiUt -O juego.nsp
 
       - name: Ejecutar Conversor Nxnative
         run: |
