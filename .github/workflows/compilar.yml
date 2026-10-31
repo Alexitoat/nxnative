@@ -33,7 +33,8 @@ jobs:
 
       - name: Ejecutar Conversor Nxnative
         run: |
-          python3 main.py --input juego.nsp --keys prod.keys --platform ios
+          # El comando find busca el archivo ejecutable de forma inteligente en cualquier subcarpeta
+          python3 $(find . -name "main.py" -o -name "nxnative.py" | head -n 1) --input juego.nsp --keys prod.keys --platform ios
 
       - name: Generar ejecutable IPA con Xcode
         run: |
