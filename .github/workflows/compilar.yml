@@ -1,0 +1,32 @@
+name: Compilar Juego iOS
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Instalar .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar requerimientos
+        run: pip3 install -r requirements.txt
+
+      - name: Ejecutar Conversor Nxnative
+        run: |
+          echo "Aquí se ejecutará el script de nxnative convirtiendo el juego"
+
+      - name: Generar ejecutable con Xcode
+        run: |
+          # Comando base para generar el proyecto final
+          echo "Compilando con Xcode de la nube..."
